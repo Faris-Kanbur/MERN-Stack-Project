@@ -36,4 +36,9 @@ body {
   height: 50px;
   background-color: rgb(9, 97, 31);
   color: aliceblue;
+  border-radius:  10px;;
+  font-size: 15px; 
+}
+.inputs button:hover {
+  cursor: pointer;
 }

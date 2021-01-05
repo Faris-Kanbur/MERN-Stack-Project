@@ -1,18 +1,28 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
 const mongoose = require('mongoose');
 const FriendModel = require('./models/Friends');
+
+
+app.use(cors());
+app.use(express.json());
 
 /// DATABASE Connection
 
 mongoose.connect("mongodb://localhost:27017/tutorialMern?readPreference=primary&appname=MongoDB%20Compass&ssl=false",
 {useNewUrlParser:true})
 
-app.get('/insert', async (req, res) => {
-    const friend = new FriendModel({ name: "Faris", age: 28});
+app.post('/addfriend', async (req, res) => {
+    const name = req.body.name;
+    const age = req.body.age;
+
+
+    const friend = new FriendModel({ name: name, age: age });
     await friend.save();
-    res.send("inserted DATA");
+    res.send("Success");
 });
+
 app.get('/read', async (req, res) => {
     FriendModel.find({}, (err, result) =>{
         if(err){
@@ -23,6 +33,6 @@ app.get('/read', async (req, res) => {
     });
 });
 
-app.listen(3002, () => {
+app.listen(3001, () => {
     console.log("You are connected");
 });
